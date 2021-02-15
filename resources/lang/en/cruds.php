@@ -66,8 +66,8 @@ return [
         ],
     ],
     'expenseManagement' => [
-        'title'          => 'Expense Management',
-        'title_singular' => 'Expense Management',
+        'title'          => 'eManageMe',
+        'title_singular' => 'eManageMe',
     ],
     'expenseCategory'   => [
         'title'          => 'Expense Categories',

@@ -88,7 +88,11 @@
             </div>
         </div>
 
-
+        <div class="row">
+            <div class="col-4">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
 
     </div>
 </div>
@@ -98,9 +102,64 @@
 @parent
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
 <script>
+
+    let expenses = @json($expensesSummary); 
+
+    let arrExpenses = Object.keys(expenses).map((key) => expenses[key]);
+
+    let chartExpensesData = [];
+    chartExpensesData.labels = [];
+    chartExpensesData.data = [];
+
+    arrExpenses.map( (item, i) => {
+        chartExpensesData.labels.push(item.name);
+        chartExpensesData.data.push(item.amount);
+
+    });
+
+      
+    var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartExpensesData.labels,
+                datasets: [{
+                    label: ['Outcome'],
+                    data: chartExpensesData.data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     $('.date').datepicker({
         autoclose: true,
         dateFormat: "{{ config('panel.date_format_js') }}"
-      })
+      });
+
+     
 </script>
 @stop
